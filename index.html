@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portafolio de Juan Jose Arrublas Gutierrez</title>
+  <meta name="description" content="Experiencia de usuario excepcional y diseño de vanguardia. Portafolio interactivo con animaciones, proyectos y contacto." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a href="#inicio" class="logo">JJ Arrublas</a>
+      <div class="nav-links">
+        <a id="nav-about" href="#sobre">Sobre mí</a>
+        <a id="nav-skills" href="#habilidades">Habilidades</a>
+        <a id="nav-projects" href="#proyectos">Proyectos</a>
+        <a id="nav-contact" href="#contacto" class="cta">Contacto</a>
+        <button id="lang-toggle" class="lang-toggle" aria-label="Cambiar idioma">
+          <span class="toggle-track"><span class="toggle-knob"></span></span>
+          <span class="toggle-text">ES</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero / Inicio -->
+  <section id="inicio" class="hero">
+    <canvas id="bg-particles" aria-hidden="true"></canvas>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <h1 id="hero-title" class="typewriter" aria-label="Hola, soy Juan Jose Arrublas Gutierrez">Hola, soy <span class="highlight">Juan Jose Arrublas Gutierrez</span></h1>
+        <p id="hero-role" class="role">Desarrollador Full Stack</p>
+        <p id="hero-tagline" class="tagline">Transformando ideas en código funcional y hermoso</p>
+        <div class="hero-actions">
+          <a id="btn-projects" href="#proyectos" class="btn primary">Ver Proyectos</a>
+          <a id="btn-explore" href="#habilidades" class="btn ghost">Explorar</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="photo-frame">
+          <img src="site\joseju.jpg" alt="Foto profesional de Juan Jose Arrublas" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sobre mí -->
+  <section id="sobre" class="about section">
+    <div class="section-header">
+      <h2 id="about-title">Sobre mí</h2>
+      <p id="about-subtitle">Una breve historia de mi pasión por la programación.</p>
+    </div>
+    <div class="timeline">
+      <article class="timeline-item">
+        <h3>Inicio</h3>
+        <p>Empecé en el mundo del código por curiosidad y creatividad. Desde entonces, me encanta construir experiencias digitales memorables.</p>
+      </article>
+      <article class="timeline-item">
+        <h3>Stack favorito</h3>
+        <p>JavaScript/TypeScript, React, Node.js, y bases de datos SQL/NoSQL. Enfocado en patrones limpios y rendimiento.</p>
+      </article>
+      <article class="timeline-item">
+        <h3>Filosofía</h3>
+        <p>Diseño centrado en el usuario, accesibilidad, y atención al detalle. Cada interacción cuenta.</p>
+      </article>
+      <article class="timeline-item">
+        <h3>Un toque personal</h3>
+        <p>Me inspira el aprendizaje continuo y la creatividad; fuera del teclado, disfruto retos que potencian el pensamiento crítico.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Habilidades -->
+  <section id="habilidades" class="skills section">
+    <div class="section-header">
+      <h2 id="skills-title">Habilidades</h2>
+      <p id="skills-subtitle">Una obra de arte interactiva: explora la galaxia técnica y mis soft skills.</p>
+    </div>
+
+    <div class="skills-layout">
+      <div class="galaxy">
+        <canvas id="galaxy" aria-label="Mapa interactivo de habilidades técnicas"></canvas>
+        <div class="legend" aria-hidden="true">
+          <span class="dot frontend"></span> Frontend
+          <span class="dot backend"></span> Backend
+          <span class="dot data"></span> Bases de Datos
+          <span class="dot devops"></span> DevOps/Cloud
+        </div>
+        <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="soft-grid">
+        <div class="soft-card" tabindex="0">
+          <div class="front"><span>Comunicación</span></div>
+          <div class="back"><p>Transmiso ideas con claridad y empatía.</p></div>
+        </div>
+        <div class="soft-card" tabindex="0">
+          <div class="front"><span>Trabajo en equipo</span></div>
+          <div class="back"><p>Colaboro con ownership y respeto por el proceso.</p></div>
+        </div>
+        <div class="soft-card" tabindex="0">
+          <div class="front"><span>Resolución de problemas</span></div>
+          <div class="back"><p>Divido retos en piezas manejables y elegantes.</p></div>
+        </div>
+        <div class="soft-card" tabindex="0">
+          <div class="front"><span>Adaptabilidad</span></div>
+          <div class="back"><p>Aprendo rápido y me adapto a contextos cambiantes.</p></div>
+        </div>
+        <div class="soft-card" tabindex="0">
+          <div class="front"><span>Liderazgo</span></div>
+          <div class="back"><p>Guío con ejemplo y foco en resultados.</p></div>
+        </div>
+        <div class="soft-card" tabindex="0">
+          <div class="front"><span>Creatividad</span></div>
+          <div class="back"><p>Diseño soluciones fuera de lo común.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proyectos -->
+  <section id="proyectos" class="projects section">
+    <div class="section-header">
+      <h2 id="projects-title">Proyectos</h2>
+      <p id="projects-subtitle">Explora el grid, filtra por tecnología y abre detalles.</p>
+    </div>
+
+    <div class="filters">
+      <button id="filter-all" class="filter active" data-filter="all">Todos</button>
+      <button id="filter-react" class="filter" data-filter="react">React</button>
+      <button id="filter-node" class="filter" data-filter="node">Node</button>
+      <button id="filter-python" class="filter" data-filter="python">Python</button>
+    </div>
+
+    <div class="grid" id="project-grid" aria-live="polite"></div>
+
+    <div id="project-modal" class="modal" aria-hidden="true" role="dialog" aria-label="Detalle de proyecto">
+      <div class="modal-content" role="document">
+        <button class="modal-close" aria-label="Cerrar">✕</button>
+        <div class="modal-body"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto" class="contact section">
+    <div class="section-header">
+      <h2 id="contact-title">Contacto</h2>
+      <p id="contact-subtitle">Conversemos sobre crear experiencias digitales únicas.</p>
+    </div>
+    <form id="contact-form" class="contact-form" action="https://formspree.io/f/xyyljvpd" method="POST">
+      <div class="form-row">
+        <label id="label-name" for="name">Nombre</label>
+        <input id="name" name="name" type="text" required />
+      </div>
+      <div class="form-row">
+        <label id="label-email" for="email">Correo</label>
+        <input id="email" name="email" type="email" required />
+      </div>
+      <div class="form-row">
+        <label id="label-message" for="message">Mensaje</label>
+        <textarea id="message" name="message" rows="5" placeholder="Escribe tu idea..." required></textarea>
+      </div>
+      <button id="submit-button" class="btn primary" type="submit">Enviar</button>
+      <p id="fallback" class="fallback">Si el formulario falla: <a href="mailto:juan.jose.arrublas@example.com?subject=Contacto%20Portafolio">juan.jose.arrublas@example.com</a></p>
+    </form>
+  </section>
+
+  <footer class="site-footer">
+    <p id="footer-text">© 2025 Juan Jose Arrublas Gutierrez • "Construyendo experiencias digitales que inspiran"</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
