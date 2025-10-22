@@ -47,25 +47,40 @@
     frontend: { color: '#7c5cff' },
     backend: { color: '#ff5c7a' },
     data: { color: '#14d46b' },
-    devops: { color: '#00d4ff' }
+    devops: { color: '#00d4ff' },
+    tools: { color: '#9fb0d3' }
   };
   const nodes = [
+    // Frontend
     { label: 'JavaScript', cat: 'frontend' },
     { label: 'TypeScript', cat: 'frontend' },
     { label: 'React', cat: 'frontend' },
     { label: 'Angular', cat: 'frontend' },
-    { label: 'Vue', cat: 'frontend' },
+    { label: 'HTML5', cat: 'frontend' },
+    { label: 'CSS3', cat: 'frontend' },
+    { label: 'Testing', cat: 'frontend' },
+
+    // Backend
     { label: 'Node.js', cat: 'backend' },
-    { label: 'Express', cat: 'backend' },
+    { label: 'Java', cat: 'backend' },
+    { label: 'Spring Boot', cat: 'backend' },
     { label: 'Python', cat: 'backend' },
-    { label: 'Django', cat: 'backend' },
-    { label: 'SQL', cat: 'data' },
-    { label: 'NoSQL', cat: 'data' },
+
+    // Bases de Datos
+    { label: 'MySQL', cat: 'data' },
+    { label: 'PostgreSQL', cat: 'data' },
+
+    // DevOps/Cloud
     { label: 'Docker', cat: 'devops' },
-    { label: 'Kubernetes', cat: 'devops' },
-    { label: 'AWS', cat: 'devops' },
-    { label: 'Testing', cat: 'frontend' }
+
+    // Herramientas y Otros
+    { label: 'Git/GitHub', cat: 'tools' },
+    { label: 'VS Code', cat: 'tools' },
+    { label: 'Figma', cat: 'tools' },
+    { label: 'Linux/Shell', cat: 'tools' },
+    { label: 'MongoDB', cat: 'tools' }
   ];
+  window.TechNodes = nodes;
   let w, h; let balls = []; let mouse = { x: 0, y: 0 };
   const rnd = (min, max) => Math.random() * (max - min) + min;
   const reset = () => {
@@ -161,7 +176,7 @@ const T = {
     contact_title: 'Contacto', contact_subtitle: 'Conversemos sobre crear experiencias digitales únicas.',
     label_name: 'Nombre', label_email: 'Correo', label_message: 'Mensaje', submit_button: 'Enviar',
     fallback: 'Si el formulario falla: ', footer_text: '© 2025 Juan Jose Arrublas Gutierrez • "Construyendo experiencias digitales que inspiran"',
-    legend: '<span class="dot frontend"></span> Frontend\n          <span class="dot backend"></span> Backend\n          <span class="dot data"></span> Bases de Datos\n          <span class="dot devops"></span> DevOps/Cloud',
+    legend: '<span class="dot frontend"></span> Frontend\n          <span class="dot backend"></span> Backend\n          <span class="dot data"></span> Bases de Datos\n          <span class="dot devops"></span> DevOps/Cloud\n          <span class="dot tools"></span> Herramientas/Otros',
     timeline: [
       { t: 'Inicio', p: 'Empecé en el mundo del código por curiosidad y creatividad. Desde entonces, me encanta construir experiencias digitales memorables.' },
       { t: 'Stack favorito', p: 'JavaScript/TypeScript, React, Node.js, y bases de datos SQL/NoSQL. Enfocado en patrones limpios y rendimiento.' },
@@ -190,7 +205,7 @@ const T = {
     contact_title: 'Contact', contact_subtitle: 'Let\'s talk about crafting unique digital experiences.',
     label_name: 'Name', label_email: 'Email', label_message: 'Message', submit_button: 'Send',
     fallback: 'If the form fails: ', footer_text: '© 2025 Juan Jose Arrublas Gutierrez • "Building inspiring digital experiences"',
-    legend: '<span class="dot frontend"></span> Frontend\n          <span class="dot backend"></span> Backend\n          <span class="dot data"></span> Databases\n          <span class="dot devops"></span> DevOps/Cloud',
+    legend: '<span class="dot frontend"></span> Frontend\n          <span class="dot backend"></span> Backend\n          <span class="dot data"></span> Databases\n          <span class="dot devops"></span> DevOps/Cloud\n          <span class="dot tools"></span> Tools/Other',
     timeline: [
       { t: 'Start', p: 'I entered the code world driven by curiosity and creativity. Since then, I love crafting memorable digital experiences.' },
       { t: 'Favorite Stack', p: 'JavaScript/TypeScript, React, Node.js, and SQL/NoSQL databases. Focused on clean patterns and performance.' },
@@ -395,3 +410,4 @@ function renderCards(filter = 'all') {
 // Inicializar (aplicar idioma por defecto y renderizar)
 applyLanguage('es');
 renderCards('all');
+renderSkillsStrip();
