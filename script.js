@@ -174,7 +174,7 @@ const T = {
     about_title: 'Sobre mí', about_subtitle: 'Una breve historia de mi pasión por la programación.',
     skills_title: 'Habilidades', skills_subtitle: 'Una obra de arte interactiva: explora la galaxia técnica y mis soft skills.',
     projects_title: 'Proyectos', projects_subtitle: 'Explora el grid, filtra por tecnología y abre detalles.',
-    filter_all: 'Todos', filter_react: 'React', filter_node: 'Node', filter_python: 'Python',
+    filter_all: 'Todos', filter_js: 'JavaScript', filter_java: 'Java', filter_sql: 'SQL', filter_html: 'HTML', filter_python: 'Python', filter_ts: 'TypeScript',
     contact_title: 'Contacto', contact_subtitle: 'Conversemos sobre crear experiencias digitales únicas.',
     label_name: 'Nombre', label_email: 'Correo', label_message: 'Mensaje', submit_button: 'Enviar',
     fallback: 'Si el formulario falla: ', footer_text: '© 2025 Juan Jose Arrublas Gutierrez • "Construyendo experiencias digitales que inspiran"',
@@ -203,7 +203,7 @@ const T = {
     about_title: 'About Me', about_subtitle: 'A brief story of my passion for programming.',
     skills_title: 'Skills', skills_subtitle: 'An interactive work of art: explore the tech galaxy and my soft skills.',
     projects_title: 'Projects', projects_subtitle: 'Browse the grid, filter by stack, and open details.',
-    filter_all: 'All', filter_react: 'React', filter_node: 'Node', filter_python: 'Python',
+    filter_all: 'All', filter_js: 'JavaScript', filter_java: 'Java', filter_sql: 'SQL', filter_html: 'HTML', filter_python: 'Python', filter_ts: 'TypeScript',
     contact_title: 'Contact', contact_subtitle: 'Let\'s talk about crafting unique digital experiences.',
     label_name: 'Name', label_email: 'Email', label_message: 'Message', submit_button: 'Send',
     fallback: 'If the form fails: ', footer_text: '© 2025 Juan Jose Arrublas Gutierrez • "Building inspiring digital experiences"',
@@ -278,9 +278,12 @@ function applyLanguage(lang) {
 
   // filtros
   document.getElementById('filter-all').textContent = L.filter_all;
-  document.getElementById('filter-react').textContent = L.filter_react;
-  document.getElementById('filter-node').textContent = L.filter_node;
+  document.getElementById('filter-js').textContent = L.filter_js;
+  document.getElementById('filter-java').textContent = L.filter_java;
+  document.getElementById('filter-sql').textContent = L.filter_sql;
+  document.getElementById('filter-html').textContent = L.filter_html;
   document.getElementById('filter-python').textContent = L.filter_python;
+  document.getElementById('filter-ts').textContent = L.filter_ts;
 
   // contacto
   document.getElementById('label-name').textContent = L.label_name;
@@ -341,50 +344,146 @@ form.addEventListener('submit', async (e) => {
 
 // Datos de proyectos bilingües
 const projectsES = [
+  // JavaScript
   {
-    id: 'p1', tech: ['react','node'],
-    title: 'UI Motion Lab',
-    description: 'Laboratorio de microinteracciones con animaciones fluidas.',
-    long: 'Exploré transiciones GSAP/Framer-like en vanilla CSS/JS para mantener rendimiento. Incluye componentes reusables y patrones accesibles.',
-    repo: 'https://github.com/', demo: '#'
+    id: 'js1', tech: ['javascript'],
+    title: 'Acme Bank',
+    image: 'img/ACME-BANCK.png',
+    description: 'Autogestión bancaria: login, operaciones básicas, reportes y seguridad.',
+    long: 'Aplicación web de autogestión de cuentas bancarias. Incluye autenticación en tiempo real, registro, recuperación de contraseña, depósitos electrónicos, retiros, pagos de servicios, consulta de saldo, estados de cuenta y certificados digitales. Persiste datos con LocalStorage y Firebase; diseño responsivo y validaciones seguras.',
+    repo: 'https://github.com/arrublas1208/Acme-Bank', demo: '#'
   },
   {
-    id: 'p2', tech: ['python'],
-    title: 'Data Pulse',
-    description: 'Visualizaciones interactivas de datos con canvas.',
-    long: 'Render de gráficos en tiempo real con algoritmos ligeros y pipeline optimizado. UI reactiva.',
-    repo: 'https://github.com/', demo: '#'
+    id: 'js2', tech: ['javascript'],
+    title: 'Gestor de Turnos (Electron)',
+    image: 'img/gestor-turnos.png',
+    description: 'App de escritorio para programación semanal con arrastrar y soltar.',
+    long: 'Aplicación de escritorio para Windows que gestiona empleados y turnos (mañana/tarde) con validaciones, reglas por cargo, bloqueo inteligente de novedades (descansos, vacaciones, incapacidad), exportación a Excel y respaldo/restauración en JSON. Paquetizada con instalador y portable.',
+    repo: 'https://github.com/arrublas1208/GESTOR-TURNOS', demo: '#'
+  },
+  // Java
+  {
+    id: 'java1', tech: ['java'],
+    title: 'HappyFeet Veterinaria',
+    image: 'img/HAPPY-FEET.png',
+    description: 'Sistema integral en Java (MVC): pacientes, citas, inventario y facturación.',
+    long: 'Arquitectura MVC robusta con módulos de pacientes, agenda médica con estados, consultas completas, control de inventario con alertas, proveedores, facturación con IVA y múltiples pagos, reportes y dashboard. Incluye patrones (Builder, Factory, Singleton, Observer, Repository) y principios SOLID.',
+    repo: 'https://github.com/arrublas1208/HAPPY-FEET', demo: '#'
+  },
+  // SQL
+  {
+    id: 'sql1', tech: ['sql'],
+    title: 'Proyecto SQL',
+    image: 'img/MYSQL.png',
+    description: 'Colección de esquemas y consultas SQL.',
+    long: 'Proyecto centrado en scripts SQL: definición de tablas, integridad referencial y consultas útiles para reportes y análisis. Enfoque en claridad y rendimiento.',
+    repo: 'https://github.com/arrublas1208/PROYECTO_SQL', demo: '#'
+  },
+  // HTML
+  {
+    id: 'html1', tech: ['html'],
+    title: 'Planificador de Bodas (Fotografía)',
+    image: 'img/PLANIFICADOR-BODAS.png',
+    description: 'Página web de portafolio con servicios y contacto.',
+    long: 'Sitio web de fotografía de bodas con galería interactiva, información de paquetes y formulario de contacto. Diseño elegante, minimalista y completamente responsivo.',
+    repo: 'https://github.com/arrublas1208/Planificador-de-Bodas', demo: '#'
+  },
+  // Python
+  {
+    id: 'py1', tech: ['python'],
+    title: 'Gestor de Tareas (Python)',
+    image: 'img/gestor-tareas.png',
+    description: 'Aplicación de consola para organizar tareas.',
+    long: 'Gestor de tareas en Python con operaciones básicas de alta/edición/eliminación y persistencia simple. Ideal para flujos de trabajo rápidos en consola.',
+    repo: 'https://github.com/arrublas1208/Gestor-de-tareas-PY', demo: '#'
   },
   {
-    id: 'p3', tech: ['react'],
-    title: 'Portfolio Engine',
-    description: 'Motor estático para portafolios en GitHub Pages.',
-    long: 'Arquitectura estática, accesible y responsive. Despliegue simple y sin dependencias pesadas.',
-    repo: 'https://github.com/', demo: '#'
+    id: 'py2', tech: ['python'],
+    title: 'Sistema de Gestión de Población',
+    image: 'img/SISTEMA-GESTION-POBLACION.png',
+    description: 'Consola con JSON, reportes y consultas de población por país.',
+    long: 'Aplicación de consola que gestiona y consulta datos de población usando JSON local. Menú interactivo con múltiples reportes: rangos de años, crecimiento, totales por año, países con datos, promedios y más. Sin dependencias externas.',
+    repo: 'https://github.com/arrublas1208/Sistema-de-Gestion-de-Poblacion-PY', demo: '#'
+  },
+  // TypeScript
+  {
+    id: 'ts1', tech: ['typescript'],
+    title: 'BK_TimeProof (NestJS)',
+    description: 'Backend TypeScript con NestJS, Prisma y despliegue en Render.',
+    long: 'Repositorio NestJS con configuración para desarrollo y producción: scripts de arranque, cobertura de tests, CORS, health check y despliegue en Render con Neon PostgreSQL. Incluye Dockerfile multi-stage y notas para Prisma/migraciones.',
+    repo: 'https://github.com/arrublas1208/BK_TimeProof', demo: '#'
   }
 ];
 
 const projectsEN = [
+  // JavaScript
   {
-    id: 'p1', tech: ['react','node'],
-    title: 'UI Motion Lab',
-    description: 'Micro‑interactions lab with fluid animations.',
-    long: 'Explored GSAP/Framer‑like transitions in vanilla CSS/JS to keep performance. Reusable components and accessible patterns.',
-    repo: 'https://github.com/', demo: '#'
+    id: 'js1', tech: ['javascript'],
+    title: 'Acme Bank',
+    image: 'img/ACME-BANCK.png',
+    description: 'Self‑management banking: auth, basic ops, reports and security.',
+    long: 'Web app for banking self‑management. Real‑time login validation, registration, password recovery, electronic deposits, withdrawals, utility payments, balance check, statements and digital certificates. Data persistence via LocalStorage/Firebase; responsive design and secure validation.',
+    repo: 'https://github.com/arrublas1208/Acme-Bank', demo: '#'
   },
   {
-    id: 'p2', tech: ['python'],
-    title: 'Data Pulse',
-    description: 'Interactive data visualizations using canvas.',
-    long: 'Real‑time chart rendering with lightweight algorithms and optimized pipeline. Reactive UI.',
-    repo: 'https://github.com/', demo: '#'
+    id: 'js2', tech: ['javascript'],
+    title: 'Shift Scheduler (Electron)',
+    image: 'img/gestor-turnos.png',
+    description: 'Desktop app for weekly scheduling with drag & drop.',
+    long: 'Windows desktop app to manage employees and shifts (AM/PM) with validations, role rules, smart blocking for time‑off/vacations/incapacity, Excel export and JSON backup/restore. Packaged with installer and portable build.',
+    repo: 'https://github.com/arrublas1208/GESTOR-TURNOS', demo: '#'
+  },
+  // Java
+  {
+    id: 'java1', tech: ['java'],
+    title: 'HappyFeet Veterinary',
+    image: 'img/HAPPY-FEET.png',
+    description: 'Java MVC system: patients, appointments, inventory and billing.',
+    long: 'Robust MVC architecture with modules for patients, smart agenda with states, full consultations, inventory control with alerts, suppliers, billing with VAT and multiple payments, reports and dashboard. Implements design patterns and SOLID principles.',
+    repo: 'https://github.com/arrublas1208/HAPPY-FEET', demo: '#'
+  },
+  // SQL
+  {
+    id: 'sql1', tech: ['sql'],
+    title: 'SQL Project',
+    image: 'img/MYSQL.png',
+    description: 'Collection of SQL schemas and queries.',
+    long: 'Project focused on SQL scripts: table definitions, referential integrity and queries for reports and analysis. Emphasis on clarity and performance.',
+    repo: 'https://github.com/arrublas1208/PROYECTO_SQL', demo: '#'
+  },
+  // HTML
+  {
+    id: 'html1', tech: ['html'],
+    title: 'Wedding Planner (Photography)',
+    image: 'img/PLANIFICADOR-BODAS.png',
+    description: 'Portfolio website with services and contact.',
+    long: 'Wedding photography site with interactive gallery, package information and contact form. Elegant, minimalist and fully responsive design.',
+    repo: 'https://github.com/arrublas1208/Planificador-de-Bodas', demo: '#'
+  },
+  // Python
+  {
+    id: 'py1', tech: ['python'],
+    title: 'Task Manager (Python)',
+    image: 'img/gestor-tareas.png',
+    description: 'Console application to organize tasks.',
+    long: 'Python task manager with basic CRUD operations and simple persistence. Ideal for quick console workflows.',
+    repo: 'https://github.com/arrublas1208/Gestor-de-tareas-PY', demo: '#'
   },
   {
-    id: 'p3', tech: ['react'],
-    title: 'Portfolio Engine',
-    description: 'Static engine for portfolios on GitHub Pages.',
-    long: 'Static, accessible and responsive architecture. Simple deployment with no heavy dependencies.',
-    repo: 'https://github.com/', demo: '#'
+    id: 'py2', tech: ['python'],
+    title: 'Population Management System',
+    image: 'img/SISTEMA-GESTION-POBLACION.png',
+    description: 'Console with JSON, reports and population queries per country.',
+    long: 'Console app managing and querying population data using local JSON. Interactive menu with multiple reports: year ranges, growth, totals per year, countries with data, averages and more. No external dependencies.',
+    repo: 'https://github.com/arrublas1208/Sistema-de-Gestion-de-Poblacion-PY', demo: '#'
+  },
+  // TypeScript
+  {
+    id: 'ts1', tech: ['typescript'],
+    title: 'BK_TimeProof (NestJS)',
+    description: 'TypeScript backend with NestJS, Prisma and Render deployment.',
+    long: 'NestJS repository configured for dev and prod: start scripts, test coverage, CORS, health check and deployment on Render with Neon PostgreSQL. Includes multi‑stage Dockerfile and notes for Prisma/migrations.',
+    repo: 'https://github.com/arrublas1208/BK_TimeProof', demo: '#'
   }
 ];
 
@@ -397,7 +496,9 @@ function renderCards(filter = 'all') {
     const el = document.createElement('article');
     el.className = 'card';
     el.innerHTML = `
-      <div class="card-thumb">${p.title}</div>
+      <div class="card-thumb">
+        ${p.image ? `<img src="${p.image}" alt="${p.title}" loading="lazy">` : `${p.title}`}
+      </div>
       <div class="card-body">
         <h3 class="card-title">${p.title}</h3>
         <p>${p.description}</p>
