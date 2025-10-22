@@ -297,15 +297,19 @@ function applyLanguage(lang) {
   document.getElementById('footer-text').textContent = L.footer_text;
 }
 
-// botón
-document.getElementById('lang-toggle')?.addEventListener('click', () => {
-  current.lang = current.lang === 'es' ? 'en' : 'es';
-  document.body.classList.toggle('lang-en', current.lang === 'en');
-  applyLanguage(current.lang);
-  // re-render proyectos para traducir títulos/descripciones
-  renderCards(document.querySelector('.filter.active')?.dataset.filter || 'all');
-});
-
+// botón (compatibilidad sin optional chaining)
+const langToggle = document.getElementById('lang-toggle');
+if (langToggle) {
+  langToggle.addEventListener('click', () => {
+    current.lang = current.lang === 'es' ? 'en' : 'es';
+    document.body.classList.toggle('lang-en', current.lang === 'en');
+    applyLanguage(current.lang);
+    const activeFilterEl = document.querySelector('.filter.active');
+    const activeFilter = activeFilterEl ? activeFilterEl.dataset.filter : 'all';
+    // re-render proyectos para traducir títulos/descripciones
+    renderCards(activeFilter);
+  });
+}
 function openProject(p) {
   modal.classList.add('show'); modal.setAttribute('aria-hidden','false');
   modalBody.innerHTML = `
@@ -513,4 +517,4 @@ function renderCards(filter = 'all') {
 // Inicializar (aplicar idioma por defecto y renderizar)
 applyLanguage('es');
 renderCards('all');
-renderSkillsStrip();
+if (typeof window.renderSkillsStrip === 'function') { window.renderSkillsStrip(); }
