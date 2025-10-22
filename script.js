@@ -78,7 +78,9 @@
     { label: 'VS Code', cat: 'tools' },
     { label: 'Figma', cat: 'tools' },
     { label: 'Linux/Shell', cat: 'tools' },
-    { label: 'MongoDB', cat: 'tools' }
+    { label: 'NetBeans', cat: 'tools' },
+    { label: 'IntelliJ IDEA', cat: 'tools' }
+    
   ];
   window.TechNodes = nodes;
   let w, h; let balls = []; let mouse = { x: 0, y: 0 };
