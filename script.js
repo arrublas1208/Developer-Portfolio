@@ -178,6 +178,7 @@ const T = {
     contact_title: 'Contacto', contact_subtitle: 'Conversemos sobre crear experiencias digitales únicas.',
     label_name: 'Nombre', label_email: 'Correo', label_message: 'Mensaje', submit_button: 'Enviar',
     fallback: 'Si el formulario falla: ', footer_text: '© 2025 Juan Jose Arrublas Gutierrez • "Construyendo experiencias digitales que inspiran"',
+    contact_github: 'GitHub', contact_email: 'Correo', contact_phone: 'Teléfono',
     legend: '<span class="dot frontend"></span> Frontend\n          <span class="dot backend"></span> Backend\n          <span class="dot data"></span> Bases de Datos\n          <span class="dot devops"></span> DevOps/Cloud\n          <span class="dot tools"></span> Herramientas/Otros',
     timeline: [
       { t: 'Inicio', p: 'Empecé en el mundo del código por curiosidad y creatividad. Desde entonces, me encanta construir experiencias digitales memorables.' },
@@ -207,6 +208,7 @@ const T = {
     contact_title: 'Contact', contact_subtitle: 'Let\'s talk about crafting unique digital experiences.',
     label_name: 'Name', label_email: 'Email', label_message: 'Message', submit_button: 'Send',
     fallback: 'If the form fails: ', footer_text: '© 2025 Juan Jose Arrublas Gutierrez • "Building inspiring digital experiences"',
+    contact_github: 'GitHub', contact_email: 'Email', contact_phone: 'Phone',
     legend: '<span class="dot frontend"></span> Frontend\n          <span class="dot backend"></span> Backend\n          <span class="dot data"></span> Databases\n          <span class="dot devops"></span> DevOps/Cloud\n          <span class="dot tools"></span> Tools/Other',
     timeline: [
       { t: 'Start', p: 'I entered the code world driven by curiosity and creativity. Since then, I love crafting memorable digital experiences.' },
@@ -295,6 +297,11 @@ function applyLanguage(lang) {
 
   // footer
   document.getElementById('footer-text').textContent = L.footer_text;
+
+  // contact links
+  document.getElementById('contact-github').textContent = L.contact_github;
+  document.getElementById('contact-email').textContent = L.contact_email;
+  document.getElementById('contact-phone').textContent = L.contact_phone;
 }
 
 // botón (compatibilidad sin optional chaining)
