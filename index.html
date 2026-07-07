@@ -7,8 +7,24 @@
   <meta name="description" content="Experiencia de usuario excepcional y diseño de vanguardia. Portafolio interactivo con animaciones, proyectos y contacto." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <!-- Marca el documento como listo para animar: los estados ocultos iniciales solo aplican si hay JS -->
+  <script>
+    document.documentElement.classList.add('anim-ready');
+    // Al recargar, iniciar siempre arriba (evita saltar a una sección por el hash o la restauración de scroll)
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    (function () {
+      try {
+        var nav = performance.getEntriesByType('navigation')[0];
+        var isReload = nav ? nav.type === 'reload'
+          : (performance.navigation && performance.navigation.type === 1);
+        if (isReload && location.hash) {
+          history.replaceState(null, '', location.pathname + location.search);
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -27,119 +43,130 @@
     </nav>
   </header>
 
-  <!-- Hero / Inicio -->
-  <section id="inicio" class="hero">
-    <canvas id="bg-particles" aria-hidden="true"></canvas>
+  <!-- Toggle de idioma (siempre visible) -->
+  <div class="lang-float" role="group" aria-label="Idioma">
+    <button type="button" data-lang="es" class="active">ES</button>
+    <button type="button" data-lang="en">EN</button>
+  </div>
+
+  <!-- Hero / Inicio — v0.1 (split-text + Anime.js) -->
+  <section id="inicio" class="hero" aria-label="Bienvenida">
+    <div class="hero-noise" aria-hidden="true"></div>
+    <span class="corner corner-left">0.1 Version</span>
+
     <div class="hero-inner">
-      <div class="hero-left">
-        <h1 id="hero-title" class="typewriter" aria-label="Hola, soy Juan Jose Arrublas Gutierrez">Hola, soy <span class="highlight">Juan Jose Arrublas Gutierrez</span></h1>
-        <p id="hero-role" class="role">Desarrollador Full Stack</p>
-        <p id="hero-tagline" class="tagline">Transformando ideas en código funcional y hermoso</p>
-        <div class="hero-actions">
-          <a id="btn-projects" href="#proyectos" class="btn primary">Ver Proyectos</a>
-          <a id="btn-explore" href="#habilidades" class="btn ghost">Explorar</a>
+      <p class="hero-greeting">Hello! <strong>Welcome to My Portfolio</strong></p>
+
+      <h1 class="hero-name" data-text="JUAN JOSE ARRUBLAS" aria-label="Juan Jose Arrublas">JUAN JOSE ARRUBLAS</h1>
+
+      <div class="hero-badge">
+        <span class="spark spark-lg" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0c.9 6.6 4.5 10.2 12 12-7.5 1.8-11.1 5.4-12 12-.9-6.6-4.5-10.2-12-12 7.5-1.8 11.1-5.4 12-12Z"/></svg></span>
+        <span class="spark spark-sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0c.9 6.6 4.5 10.2 12 12-7.5 1.8-11.1 5.4-12 12-.9-6.6-4.5-10.2-12-12 7.5-1.8 11.1-5.4 12-12Z"/></svg></span>
+        <span class="hero-pill">Full Stack Developer</span>
+        <span class="spark spark-sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0c.9 6.6 4.5 10.2 12 12-7.5 1.8-11.1 5.4-12 12-.9-6.6-4.5-10.2-12-12 7.5-1.8 11.1-5.4 12-12Z"/></svg></span>
+        <span class="spark spark-lg" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0c.9 6.6 4.5 10.2 12 12-7.5 1.8-11.1 5.4-12 12-.9-6.6-4.5-10.2-12-12 7.5-1.8 11.1-5.4 12-12Z"/></svg></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- About me — estilo tasteskill (tarjetas flotantes con elevación) -->
+  <section id="sobre" class="about-tk">
+    <div class="about-tk-bg" aria-hidden="true"></div>
+    <div class="about-tk-inner">
+
+      <!-- Izquierda: foto + tarjetas flotantes -->
+      <div class="about-media sr">
+        <div class="photo-card">
+          <img src="JuanJoseArrublas.jpg" alt="Juan Jose Arrublas" loading="lazy" />
+        </div>
+        <div class="float-card status-card">
+          <span class="dot-live" aria-hidden="true"></span><span id="about-status">Disponible para proyectos</span>
+        </div>
+        <div class="float-card role-card">
+          <span class="role-diamond" aria-hidden="true"></span><span>Full Stack Developer</span>
         </div>
       </div>
-      <div class="hero-right">
-        <div class="photo-frame">
-          <img src="JuanJoseArrublas.jpg" alt="Foto profesional de Juan Jose Arrublas" />
+
+      <!-- Derecha: tarjeta de contenido -->
+      <div class="about-content sr d1">
+        <span class="about-eyebrow" id="about-eyebrow">01 — Sobre mí</span>
+        <h2 class="about-title">About <span class="serif-italic">me?</span></h2>
+        <p class="about-text" id="about-text">Desarrollo software full-stack de extremo a extremo — de APIs en Java/Spring Boot y NestJS a aplicaciones de escritorio en Electron — sobre bases de datos relacionales bien modeladas en PostgreSQL, con triggers, procedimientos e integridad referencial. Sostengo cada sistema en patrones de diseño, principios SOLID y arquitectura por capas para que escale sin acumular deuda técnica. Lo he aplicado en dominios reales: logística e inventario, nómina, banca en autogestión y e-commerce.</p>
+        <div class="about-tags">
+          <span class="tk-tag">Java</span>
+          <span class="tk-tag">Spring Boot</span>
+          <span class="tk-tag">NestJS</span>
+          <span class="tk-tag">TypeScript</span>
+          <span class="tk-tag">PostgreSQL</span>
+          <span class="tk-tag">Electron</span>
+        </div>
+        <div class="about-actions">
+          <a href="#proyectos" class="tk-btn tk-btn-dark" id="about-cta-projects">Ver proyectos →</a>
+          <a href="#contacto" class="tk-btn tk-btn-light" id="about-cta-contact">Contacto</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Habilidades / Stack — tarjetas numeradas -->
+  <section id="habilidades" class="tk-section stack-section">
+    <div class="tk-section-inner">
+      <p class="tk-kicker" id="skills-title">Stack &amp; herramientas</p>
+      <div class="stack-grid sr">
+        <div class="skill-card is-active" tabindex="0">
+          <span class="skill-num">01</span>
+          <span class="skill-icon"><img src="https://cdn.simpleicons.org/openjdk/2a1418" alt="" loading="lazy" width="34" height="34"></span>
+          <span class="skill-name">Java</span>
+        </div>
+        <div class="skill-card" tabindex="0">
+          <span class="skill-num">02</span>
+          <span class="skill-icon"><img src="https://cdn.simpleicons.org/springboot" alt="" loading="lazy" width="34" height="34"></span>
+          <span class="skill-name">Spring Boot</span>
+        </div>
+        <div class="skill-card" tabindex="0">
+          <span class="skill-num">03</span>
+          <span class="skill-icon"><img src="https://cdn.simpleicons.org/nestjs" alt="" loading="lazy" width="34" height="34"></span>
+          <span class="skill-name">NestJS</span>
+        </div>
+        <div class="skill-card" tabindex="0">
+          <span class="skill-num">04</span>
+          <span class="skill-icon"><img src="https://cdn.simpleicons.org/typescript" alt="" loading="lazy" width="34" height="34"></span>
+          <span class="skill-name">TypeScript</span>
+        </div>
+        <div class="skill-card" tabindex="0">
+          <span class="skill-num">05</span>
+          <span class="skill-icon"><img src="https://cdn.simpleicons.org/react" alt="" loading="lazy" width="34" height="34"></span>
+          <span class="skill-name">React</span>
+        </div>
+        <div class="skill-card" tabindex="0">
+          <span class="skill-num">06</span>
+          <span class="skill-icon"><img src="https://cdn.simpleicons.org/postgresql" alt="" loading="lazy" width="34" height="34"></span>
+          <span class="skill-name">PostgreSQL</span>
+        </div>
+        <div class="skill-card" tabindex="0">
+          <span class="skill-num">07</span>
+          <span class="skill-icon"><img src="https://cdn.simpleicons.org/python" alt="" loading="lazy" width="34" height="34"></span>
+          <span class="skill-name">Python</span>
+        </div>
+        <div class="skill-card" tabindex="0">
+          <span class="skill-num">08</span>
+          <span class="skill-icon"><img src="https://cdn.simpleicons.org/electron" alt="" loading="lazy" width="34" height="34"></span>
+          <span class="skill-name">Electron</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Sobre mí -->
-  <section id="sobre" class="about section">
-    <div class="section-header">
-      <h2 id="about-title">Sobre mí</h2>
-      <p id="about-subtitle">Una breve historia de mi pasión por la programación.</p>
+  <!-- Proyectos — marquee horizontal en movimiento -->
+  <section id="proyectos" class="tk-section proj-section">
+    <div class="tk-section-inner sr">
+      <p class="tk-kicker" id="projects-title">Proyectos</p>
+      <h2 class="proj-headline" id="projects-subtitle">Sistemas que he construido</h2>
     </div>
-    <div class="timeline">
-      <article class="timeline-item">
-        <h3>Inicio</h3>
-        <p>Empecé en el mundo del código por curiosidad y creatividad. Desde entonces, me encanta construir experiencias digitales memorables.</p>
-      </article>
-      <article class="timeline-item">
-        <h3>Stack favorito</h3>
-        <p>JavaScript/TypeScript, React, Node.js, y bases de datos SQL/NoSQL. Enfocado en patrones limpios y rendimiento.</p>
-      </article>
-      <article class="timeline-item">
-        <h3>Filosofía</h3>
-        <p>Diseño centrado en el usuario, accesibilidad, y atención al detalle. Cada interacción cuenta.</p>
-      </article>
-      <article class="timeline-item">
-        <h3>Un toque personal</h3>
-        <p>Me inspira el aprendizaje continuo y la creatividad; fuera del teclado, disfruto retos que potencian el pensamiento crítico.</p>
-      </article>
+    <div class="proj-marquee" id="proj-marquee">
+      <div class="proj-track" id="project-grid" aria-label="Proyectos"></div>
     </div>
-  </section>
-
-  <!-- Habilidades -->
-  <section id="habilidades" class="skills section">
-    <div class="section-header">
-      <h2 id="skills-title">Habilidades</h2>
-      <p id="skills-subtitle">Una obra de arte interactiva: explora la galaxia técnica y mis soft skills.</p>
-    </div>
-
-    <div class="skills-layout">
-      <div class="galaxy">
-        <canvas id="galaxy" aria-label="Mapa interactivo de habilidades técnicas"></canvas>
-        <div class="legend" aria-hidden="true">
-          <span class="dot frontend"></span> Frontend
-          <span class="dot backend"></span> Backend
-          <span class="dot data"></span> Bases de Datos
-          <span class="dot devops"></span> DevOps/Cloud
-        </div>
-        <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
-      </div>
-
-      <div class="soft-grid">
-        <div class="soft-card" tabindex="0">
-          <div class="front"><span>Comunicación</span></div>
-          <div class="back"><p>Transmiso ideas con claridad y empatía.</p></div>
-        </div>
-        <div class="soft-card" tabindex="0">
-          <div class="front"><span>Trabajo en equipo</span></div>
-          <div class="back"><p>Colaboro con ownership y respeto por el proceso.</p></div>
-        </div>
-        <div class="soft-card" tabindex="0">
-          <div class="front"><span>Resolución de problemas</span></div>
-          <div class="back"><p>Divido retos en piezas manejables y elegantes.</p></div>
-        </div>
-        <div class="soft-card" tabindex="0">
-          <div class="front"><span>Adaptabilidad</span></div>
-          <div class="back"><p>Aprendo rápido y me adapto a contextos cambiantes.</p></div>
-        </div>
-        <div class="soft-card" tabindex="0">
-          <div class="front"><span>Liderazgo</span></div>
-          <div class="back"><p>Guío con ejemplo y foco en resultados.</p></div>
-        </div>
-        <div class="soft-card" tabindex="0">
-          <div class="front"><span>Creatividad</span></div>
-          <div class="back"><p>Diseño soluciones fuera de lo común.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Proyectos -->
-  <section id="proyectos" class="projects section">
-    <div class="section-header">
-      <h2 id="projects-title">Proyectos</h2>
-      <p id="projects-subtitle">Explora el grid, filtra por tecnología y abre detalles.</p>
-    </div>
-
-    <div class="filters">
-      <button id="filter-all" class="filter active" data-filter="all">Todos</button>
-      <button id="filter-js" class="filter" data-filter="javascript">JavaScript</button>
-      <button id="filter-java" class="filter" data-filter="java">Java</button>
-      <button id="filter-sql" class="filter" data-filter="sql">SQL</button>
-      <button id="filter-html" class="filter" data-filter="html">HTML</button>
-      <button id="filter-python" class="filter" data-filter="python">Python</button>
-      <button id="filter-ts" class="filter" data-filter="typescript">TypeScript</button>
-    </div>
-
-    <div class="grid" id="project-grid" aria-live="polite"></div>
 
     <div id="project-modal" class="modal" aria-hidden="true" role="dialog" aria-label="Detalle de proyecto">
       <div class="modal-content" role="document">
@@ -149,32 +176,36 @@
     </div>
   </section>
 
-  <!-- Contacto -->
-  <section id="contacto" class="contact section">
-    <div class="section-header">
-      <h2 id="contact-title">Contacto</h2>
-      <p id="contact-subtitle">Conversemos sobre crear experiencias digitales únicas.</p>
-    </div>
-    <form id="contact-form" class="contact-form" action="https://formspree.io/f/xyyljvpd" method="POST">
-      <div class="form-row">
-        <label id="label-name" for="name">Nombre</label>
-        <input id="name" name="name" type="text" required />
+  <!-- Contacto — estilo tasteskill -->
+  <section id="contacto" class="tk-section contact-tk">
+    <div class="tk-section-inner contact-grid">
+      <div class="contact-intro sr">
+        <p class="tk-kicker contact-kicker" id="contact-title">Contacto</p>
+        <h2 class="contact-headline" id="contact-headline">Construyamos algo <span class="serif-italic">juntos</span></h2>
+        <p class="contact-lead" id="contact-subtitle">Conversemos sobre crear experiencias digitales únicas.</p>
+        <div class="contact-links">
+          <a id="contact-github" class="contact-link" href="https://github.com/arrublas1208" target="_blank" rel="noreferrer">GitHub</a>
+          <a id="contact-email" class="contact-link" href="mailto:arrublas1208@gmail.com">Correo</a>
+          <a id="contact-phone" class="contact-link" href="tel:+573108051310">Teléfono</a>
+        </div>
       </div>
-      <div class="form-row">
-        <label id="label-email" for="email">Correo</label>
-        <input id="email" name="email" type="email" required />
-      </div>
-      <div class="form-row">
-        <label id="label-message" for="message">Mensaje</label>
-        <textarea id="message" name="message" rows="5" placeholder="Escribe tu idea..." required></textarea>
-      </div>
-      <button id="submit-button" class="btn primary" type="submit">Enviar</button>
-      <p id="fallback" class="fallback">Si el formulario falla: <a href="mailto:arrublas1208@gmail.com?subject=Contacto%20Portafolio">arrublas1208@gmail.com</a></p>
-    </form>
-    <div class="contact-links">
-      <a id="contact-github" href="https://github.com/arrublas1208" target="_blank">GitHub</a>
-      <a id="contact-email" href="mailto:arrublas1208@gmail.com">Correo</a>
-      <a id="contact-phone" href="tel:+573108051310">Teléfono</a>
+
+      <form id="contact-form" class="contact-card sr d1" action="https://formspree.io/f/xyyljvpd" method="POST">
+        <div class="form-row">
+          <label id="label-name" for="name">Nombre</label>
+          <input id="name" name="name" type="text" required />
+        </div>
+        <div class="form-row">
+          <label id="label-email" for="email">Correo</label>
+          <input id="email" name="email" type="email" required />
+        </div>
+        <div class="form-row">
+          <label id="label-message" for="message">Mensaje</label>
+          <textarea id="message" name="message" rows="5" placeholder="Escribe tu idea..." required></textarea>
+        </div>
+        <button id="submit-button" class="tk-btn tk-btn-dark" type="submit">Enviar</button>
+        <p id="fallback" class="fallback">Si el formulario falla: <a href="mailto:arrublas1208@gmail.com?subject=Contacto%20Portafolio">arrublas1208@gmail.com</a></p>
+      </form>
     </div>
   </section>
 
@@ -182,6 +213,8 @@
     <p id="footer-text">© 2025 Juan Jose Arrublas Gutierrez • "Construyendo experiencias digitales que inspiran"</p>
   </footer>
 
+  <!-- Anime.js (CDN) — motor de animación del hero -->
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,137 +1,79 @@
-// UTIL: Efecto máquina de escribir
-(function typewriter() {
-  const el = document.querySelector('.typewriter');
-  const full = el.textContent.trim();
-  el.textContent = '';
-  let i = 0;
-  const tick = () => {
-    el.textContent = full.slice(0, i++);
-    if (i <= full.length) requestAnimationFrame(tick);
-  };
-  tick();
-})();
+// ============ HERO v0.1 — Entrada split-text con blur invertido (Anime.js) ============
+(function heroIntro() {
+  const hero = document.querySelector('.hero');
+  const nameEl = document.querySelector('.hero-name');
+  if (!hero || !nameEl) return;
 
-// Fondo de partículas (canvas)
-(function particles() {
-  const canvas = document.getElementById('bg-particles');
-  const ctx = canvas.getContext('2d');
-  let w, h; let dots = [];
-  const rnd = (min, max) => Math.random() * (max - min) + min;
-  const reset = () => { w = canvas.width = window.innerWidth; h = canvas.height = document.querySelector('.hero').offsetHeight; dots = Array.from({ length: Math.floor(w * 0.05) }, () => ({ x: rnd(0, w), y: rnd(0, h), r: rnd(0.6, 2.2), vx: rnd(-0.3, 0.3), vy: rnd(-0.3, 0.3) })); };
-  const draw = () => {
-    ctx.clearRect(0,0,w,h);
-    for (const d of dots) {
-      d.x += d.vx; d.y += d.vy;
-      if (d.x < 0 || d.x > w) d.vx *= -1;
-      if (d.y < 0 || d.y > h) d.vy *= -1;
-      ctx.beginPath();
-      const g = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.r*4);
-      g.addColorStop(0, 'rgba(124,92,255,.9)');
-      g.addColorStop(1, 'rgba(0,212,255,0)');
-      ctx.fillStyle = g;
-      ctx.arc(d.x, d.y, d.r, 0, Math.PI*2);
-      ctx.fill();
+  // Split Text: agrupar por palabras (no se parten) y una <span> por letra
+  const source = (nameEl.getAttribute('data-text') || nameEl.textContent).trim();
+  nameEl.textContent = '';
+  const words = source.split(/\s+/);
+  words.forEach((word, wi) => {
+    const wEl = document.createElement('span');
+    wEl.className = 'word';
+    for (const ch of word) {
+      const s = document.createElement('span');
+      s.className = 'letter'; s.textContent = ch; s.setAttribute('aria-hidden', 'true');
+      wEl.appendChild(s);
     }
-    requestAnimationFrame(draw);
-  };
-  window.addEventListener('resize', reset);
-  reset(); draw();
-})();
-
-// Galaxia interactiva (habilidades técnicas)
-(function galaxy() {
-  const canvas = document.getElementById('galaxy');
-  const ctx = canvas.getContext('2d');
-  const tooltip = document.getElementById('tooltip');
-  const categories = {
-    frontend: { color: '#7c5cff' },
-    backend: { color: '#ff5c7a' },
-    data: { color: '#14d46b' },
-    devops: { color: '#00d4ff' },
-    tools: { color: '#9fb0d3' }
-  };
-  const nodes = [
-    // Frontend
-    { label: 'JavaScript', cat: 'frontend' },
-    { label: 'TypeScript', cat: 'frontend' },
-    { label: 'React', cat: 'frontend' },
-    { label: 'Angular', cat: 'frontend' },
-    { label: 'HTML5', cat: 'frontend' },
-    { label: 'CSS3', cat: 'frontend' },
-    { label: 'Testing', cat: 'frontend' },
-
-    // Backend
-    { label: 'Node.js', cat: 'backend' },
-    { label: 'Java', cat: 'backend' },
-    { label: 'Spring Boot', cat: 'backend' },
-    { label: 'Python', cat: 'backend' },
-
-    // Bases de Datos
-    { label: 'MySQL', cat: 'data' },
-    { label: 'PostgreSQL', cat: 'data' },
-
-    // DevOps/Cloud
-    { label: 'Docker', cat: 'devops' },
-
-    // Herramientas y Otros
-    { label: 'Git/GitHub', cat: 'tools' },
-    { label: 'VS Code', cat: 'tools' },
-    { label: 'Figma', cat: 'tools' },
-    { label: 'Linux/Shell', cat: 'tools' },
-    { label: 'NetBeans', cat: 'tools' },
-    { label: 'IntelliJ IDEA', cat: 'tools' }
-    
-  ];
-  window.TechNodes = nodes;
-  let w, h; let balls = []; let mouse = { x: 0, y: 0 };
-  const rnd = (min, max) => Math.random() * (max - min) + min;
-  const reset = () => {
-    w = canvas.width = canvas.clientWidth; h = canvas.height = 420;
-    balls = nodes.map(n => ({ n, x: rnd(40, w-40), y: rnd(40, h-40), r: 8, vx: rnd(-0.6,0.6), vy: rnd(-0.6,0.6) }));
-  };
-  const draw = () => {
-    ctx.clearRect(0,0,w,h);
-    // conexiones suaves
-    for (let i=0;i<balls.length;i++) {
-      for (let j=i+1;j<balls.length;j++) {
-        const a = balls[i], b = balls[j];
-        const dist = Math.hypot(a.x-b.x, a.y-b.y);
-        if (dist < 120) {
-          ctx.strokeStyle = `rgba(124,92,255,${1-dist/120})`;
-          ctx.lineWidth = 0.6; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
-        }
-      }
-    }
-    // nodos
-    for (const ball of balls) {
-      ball.x += ball.vx; ball.y += ball.vy;
-      if (ball.x < 14 || ball.x > w-14) ball.vx *= -1;
-      if (ball.y < 14 || ball.y > h-14) ball.vy *= -1;
-      const color = categories[ball.n.cat].color;
-      ctx.fillStyle = color; ctx.beginPath(); ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2); ctx.fill();
-      // hover
-      if (Math.hypot(mouse.x-ball.x, mouse.y-ball.y) < 16) {
-        ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.stroke();
-        tooltip.style.opacity = 1;
-        tooltip.style.left = `${mouse.x}px`; tooltip.style.top = `${mouse.y}px`;
-        tooltip.textContent = `${ball.n.label} • ${ball.n.cat}`;
-      }
-    }
-    requestAnimationFrame(draw);
-  };
-  canvas.addEventListener('mousemove', e => {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;
+    nameEl.appendChild(wEl);
+    // espacio real y separable entre palabras (permite quiebre solo entre palabras)
+    if (wi < words.length - 1) nameEl.appendChild(document.createTextNode(' '));
   });
-  canvas.addEventListener('mouseleave', () => tooltip.style.opacity = 0);
-  window.addEventListener('resize', reset);
-  reset(); draw();
+  const letters = nameEl.querySelectorAll('.letter');
+
+  // Revelar el header al pasar el hero
+  const header = document.querySelector('.site-header');
+  if (header) {
+    const onScroll = () => header.classList.toggle('header-visible', window.scrollY > window.innerHeight * 0.6);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  // Sin animación: movimiento reducido o Anime.js no disponible → mostrar todo
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || typeof anime === 'undefined') {
+    document.documentElement.classList.remove('anim-ready');
+    return;
+  }
+
+  // Asignar índice de línea a cada letra (para alternar la dirección del deslizamiento, como en SplitText)
+  const wordEls = nameEl.querySelectorAll('.word');
+  const tops = [];
+  wordEls.forEach((w) => { const t = Math.round(w.offsetTop); if (tops.indexOf(t) === -1) tops.push(t); });
+  tops.sort((a, b) => a - b);
+  wordEls.forEach((w) => {
+    const line = tops.indexOf(Math.round(w.offsetTop));
+    w.querySelectorAll('.letter').forEach((l) => { l.dataset.line = line; });
+  });
+
+  // Timeline: fade general → letras (revelado con máscara vertical + blur) → texto superior → badge → esquinas
+  // Movimiento basado en https://animejs.com/documentation/text/splittext
+  anime.timeline({ easing: 'easeOutExpo' })
+    .add({ targets: hero, opacity: [0, 1], duration: 400, easing: 'linear' })
+    .add({
+      targets: letters,
+      // línea impar entra desde abajo (100%), línea par desde arriba (-100%) — igual que la doc
+      translateY: (el) => [parseInt(el.dataset.line, 10) % 2 ? '100%' : '-100%', '0%'],
+      filter: ['blur(16px)', 'blur(0px)'],
+      opacity: [0, 1],
+      duration: 820,
+      delay: anime.stagger(30)
+    }, '-=120')
+    .add({ targets: '.hero-greeting', opacity: [0, 1], translateY: [16, 0], duration: 700 }, '-=520')
+    .add({ targets: '.hero-pill', opacity: [0, 1], translateY: [18, 0], duration: 700 }, '-=560')
+    // Estrellas: aparecen + se trasladan + giran (izquierda → horario, derecha → antihorario), lento
+    .add({
+      targets: '.spark',
+      opacity: [0, 1],
+      translateY: [18, 0],
+      rotate: (el, i) => (i < 2 ? [-360, 0] : [360, 0]),
+      duration: 1200,
+      easing: 'easeOutCubic'
+    }, '-=700')
+    .add({ targets: '.corner', opacity: [0, 1], translateY: [-10, 0], duration: 600, delay: anime.stagger(120) }, '-=900');
 })();
 
-// Soft cards: permitir click para girar en móviles
-for (const card of document.querySelectorAll('.soft-card')) {
-  card.addEventListener('click', () => card.focus());
-}
 
 // Datos de proyectos y grid con filtros + modal
 const projects = [
@@ -172,11 +114,15 @@ const T = {
     hero_role: 'Desarrollador Full Stack', hero_tagline: 'Transformando ideas en código funcional y hermoso',
     btn_projects: 'Ver Proyectos', btn_explore: 'Explorar',
     about_title: 'Sobre mí', about_subtitle: 'Una breve historia de mi pasión por la programación.',
-    skills_title: 'Habilidades', skills_subtitle: 'Una obra de arte interactiva: explora la galaxia técnica y mis soft skills.',
-    projects_title: 'Proyectos', projects_subtitle: 'Explora el grid, filtra por tecnología y abre detalles.',
+    about_eyebrow: '01 — Sobre mí',
+    about_text: 'Desarrollo software full-stack de extremo a extremo — de APIs en Java/Spring Boot y NestJS a aplicaciones de escritorio en Electron — sobre bases de datos relacionales bien modeladas en PostgreSQL, con triggers, procedimientos e integridad referencial. Sostengo cada sistema en patrones de diseño, principios SOLID y arquitectura por capas para que escale sin acumular deuda técnica. Lo he aplicado en dominios reales: logística e inventario, nómina, banca en autogestión y e-commerce.',
+    about_status: 'Disponible para proyectos', about_cta_projects: 'Ver proyectos →', about_cta_contact: 'Contacto',
+    skills_title: 'Stack & herramientas', skills_subtitle: 'Una obra de arte interactiva: explora la galaxia técnica y mis soft skills.',
+    projects_title: 'Proyectos', projects_subtitle: 'Sistemas que he construido',
     filter_all: 'Todos', filter_js: 'JavaScript', filter_java: 'Java', filter_sql: 'SQL', filter_html: 'HTML', filter_python: 'Python', filter_ts: 'TypeScript',
     contact_title: 'Contacto', contact_subtitle: 'Conversemos sobre crear experiencias digitales únicas.',
-    label_name: 'Nombre', label_email: 'Correo', label_message: 'Mensaje', submit_button: 'Enviar',
+    contact_headline: 'Construyamos algo <span class="serif-italic">juntos</span>',
+    label_name: 'Nombre', label_email: 'Correo', label_message: 'Mensaje', submit_button: 'Enviar', message_ph: 'Escribe tu idea...',
     fallback: 'Si el formulario falla: ', footer_text: '© 2025 Juan Jose Arrublas Gutierrez • "Construyendo experiencias digitales que inspiran"',
     contact_github: 'GitHub', contact_email: 'Correo', contact_phone: 'Teléfono',
     legend: '<span class="dot frontend"></span> Frontend\n          <span class="dot backend"></span> Backend\n          <span class="dot data"></span> Bases de Datos\n          <span class="dot devops"></span> DevOps/Cloud\n          <span class="dot tools"></span> Herramientas/Otros',
@@ -202,11 +148,15 @@ const T = {
     hero_role: 'Full‑Stack Developer', hero_tagline: 'Turning ideas into functional, beautiful code',
     btn_projects: 'View Projects', btn_explore: 'Explore',
     about_title: 'About Me', about_subtitle: 'A brief story of my passion for programming.',
-    skills_title: 'Skills', skills_subtitle: 'An interactive work of art: explore the tech galaxy and my soft skills.',
-    projects_title: 'Projects', projects_subtitle: 'Browse the grid, filter by stack, and open details.',
+    about_eyebrow: '01 — About me',
+    about_text: 'I build full-stack software end to end — from Java/Spring Boot and NestJS APIs to Electron desktop apps — on top of well-modeled relational databases in PostgreSQL, with triggers, stored procedures and referential integrity. I ground every system in design patterns, SOLID principles and layered architecture so it scales without piling up technical debt. I\'ve applied it in real domains: logistics and inventory, payroll, self-service banking and e-commerce.',
+    about_status: 'Available for projects', about_cta_projects: 'View projects →', about_cta_contact: 'Contact',
+    skills_title: 'Stack & tools', skills_subtitle: 'An interactive work of art: explore the tech galaxy and my soft skills.',
+    projects_title: 'Projects', projects_subtitle: 'Systems I\'ve built',
     filter_all: 'All', filter_js: 'JavaScript', filter_java: 'Java', filter_sql: 'SQL', filter_html: 'HTML', filter_python: 'Python', filter_ts: 'TypeScript',
     contact_title: 'Contact', contact_subtitle: 'Let\'s talk about crafting unique digital experiences.',
-    label_name: 'Name', label_email: 'Email', label_message: 'Message', submit_button: 'Send',
+    contact_headline: 'Let\'s build something <span class="serif-italic">together</span>',
+    label_name: 'Name', label_email: 'Email', label_message: 'Message', submit_button: 'Send', message_ph: 'Write your idea...',
     fallback: 'If the form fails: ', footer_text: '© 2025 Juan Jose Arrublas Gutierrez • "Building inspiring digital experiences"',
     contact_github: 'GitHub', contact_email: 'Email', contact_phone: 'Phone',
     legend: '<span class="dot frontend"></span> Frontend\n          <span class="dot backend"></span> Backend\n          <span class="dot data"></span> Databases\n          <span class="dot devops"></span> DevOps/Cloud\n          <span class="dot tools"></span> Tools/Other',
@@ -238,62 +188,34 @@ function applyLanguage(lang) {
   const toggleText = document.querySelector('#lang-toggle .toggle-text');
   if (toggleText) toggleText.textContent = lang === 'en' ? 'EN' : 'ES';
 
-  // hero
-  const heroTitle = document.getElementById('hero-title');
-  heroTitle.innerHTML = `${L.hero_title}`;
-  document.getElementById('hero-role').textContent = L.hero_role;
-  document.getElementById('hero-tagline').textContent = L.hero_tagline;
-  document.getElementById('btn-projects').textContent = L.btn_projects;
-  document.getElementById('btn-explore').textContent = L.btn_explore;
+  // hero: la portada v0.1 es estática (no se traduce)
 
-  // headers
-  document.getElementById('about-title').textContent = L.about_title;
-  document.getElementById('about-subtitle').textContent = L.about_subtitle;
-  document.getElementById('skills-title').textContent = L.skills_title;
-  document.getElementById('skills-subtitle').textContent = L.skills_subtitle;
-  document.getElementById('projects-title').textContent = L.projects_title;
-  document.getElementById('projects-subtitle').textContent = L.projects_subtitle;
-  document.getElementById('contact-title').textContent = L.contact_title;
-  document.getElementById('contact-subtitle').textContent = L.contact_subtitle;
+  // About me (nueva sección tasteskill) — acceso seguro por si algún id no existe
+  const setTxt = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  setTxt('about-eyebrow', L.about_eyebrow);
+  setTxt('about-text', L.about_text);
+  setTxt('about-status', L.about_status);
+  setTxt('about-cta-projects', L.about_cta_projects);
+  setTxt('about-cta-contact', L.about_cta_contact);
 
-  // legend del canvas
-  const legend = document.querySelector('.legend');
-  if (legend) legend.innerHTML = L.legend;
-
-  // timeline
-  const tlItems = document.querySelectorAll('.timeline-item');
-  L.timeline.forEach((item, i) => {
-    const el = tlItems[i];
-    if (!el) return;
-    const h3 = el.querySelector('h3'); const p = el.querySelector('p');
-    if (h3) h3.textContent = item.t; if (p) p.textContent = item.p;
-  });
-
-  // soft skills
-  const softCards = document.querySelectorAll('.soft-card');
-  softCards.forEach((card, i) => {
-    const front = card.querySelector('.front span');
-    const back = card.querySelector('.back p');
-    if (front) front.textContent = L.soft_front[i];
-    if (back) back.textContent = L.soft_back[i];
-  });
-
-  // filtros
-  document.getElementById('filter-all').textContent = L.filter_all;
-  document.getElementById('filter-js').textContent = L.filter_js;
-  document.getElementById('filter-java').textContent = L.filter_java;
-  document.getElementById('filter-sql').textContent = L.filter_sql;
-  document.getElementById('filter-html').textContent = L.filter_html;
-  document.getElementById('filter-python').textContent = L.filter_python;
-  document.getElementById('filter-ts').textContent = L.filter_ts;
+  // headers (acceso seguro)
+  setTxt('skills-title', L.skills_title);
+  setTxt('projects-title', L.projects_title);
+  setTxt('projects-subtitle', L.projects_subtitle);
+  setTxt('contact-title', L.contact_title);
+  setTxt('contact-subtitle', L.contact_subtitle);
+  const ch = document.getElementById('contact-headline');
+  if (ch) ch.innerHTML = L.contact_headline;
 
   // contacto
   document.getElementById('label-name').textContent = L.label_name;
   document.getElementById('label-email').textContent = L.label_email;
   document.getElementById('label-message').textContent = L.label_message;
   document.getElementById('submit-button').textContent = L.submit_button;
+  const msg = document.getElementById('message');
+  if (msg && L.message_ph) msg.placeholder = L.message_ph;
   const fb = document.getElementById('fallback');
-  fb.innerHTML = `${L.fallback}<a href="mailto:juan.jose.arrublas@example.com?subject=Portfolio%20Contact">juan.jose.arrublas@example.com</a>`;
+  fb.innerHTML = `${L.fallback}<a href="mailto:arrublas1208@gmail.com?subject=Contacto%20Portafolio">arrublas1208@gmail.com</a>`;
 
   // footer
   document.getElementById('footer-text').textContent = L.footer_text;
@@ -500,28 +422,110 @@ const projectsEN = [
 
 const getProjects = () => (current.lang === 'en' ? projectsEN : projectsES);
 
-function renderCards(filter = 'all') {
+function renderCards() {
   grid.innerHTML = '';
-  const list = getProjects().filter(p => filter === 'all' || p.tech.includes(filter));
-  for (const p of list) {
+  const list = getProjects();
+  const build = (p) => {
     const el = document.createElement('article');
-    el.className = 'card';
+    el.className = 'proj-card';
     el.innerHTML = `
-      <div class="card-thumb">
-        ${p.image ? `<img src="${p.image}" alt="${p.title}" loading="lazy">` : `${p.title}`}
-      </div>
-      <div class="card-body">
-        <h3 class="card-title">${p.title}</h3>
-        <p>${p.description}</p>
-        <div class="card-tags">${p.tech.map(t=>`<span class='tag'>${t}</span>`).join('')}</div>
-      </div>
-    `;
+      <div class="proj-thumb">${p.image ? `<img src="${p.image}" alt="${p.title}" loading="lazy">` : `<span class="proj-thumb-txt">${p.title}</span>`}</div>
+      <div class="proj-body">
+        <h3 class="proj-title">${p.title}</h3>
+        <p class="proj-desc">${p.description}</p>
+        <div class="proj-tags">${p.tech.map(t => `<span class='tk-tag'>${t}</span>`).join('')}</div>
+      </div>`;
     el.addEventListener('click', () => openProject(p));
-    grid.appendChild(el);
-  }
+    return el;
+  };
+  // Duplicar la lista para un marquee continuo y sin costura
+  [...list, ...list].forEach((p) => grid.appendChild(build(p)));
 }
 
 // Inicializar (aplicar idioma por defecto y renderizar)
 applyLanguage('es');
 renderCards('all');
 if (typeof window.renderSkillsStrip === 'function') { window.renderSkillsStrip(); }
+
+// ============ Reveals al hacer scroll — bidireccional (entra al bajar y al subir) ============
+(function scrollReveals() {
+  const els = document.querySelectorAll('.sr');
+  if (!els.length) return;
+  if (!('IntersectionObserver' in window)) { els.forEach((e) => e.classList.add('in')); return; }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { e.target.classList.toggle('in', e.isIntersecting); });
+  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+  els.forEach((e) => io.observe(e));
+})();
+
+// ============ Toggle de idioma ES/EN (siempre visible) ============
+function setLang(lang) {
+  current.lang = lang;
+  document.body.classList.toggle('lang-en', lang === 'en');
+  applyLanguage(lang);
+  renderCards();
+  document.querySelectorAll('.lang-float [data-lang]').forEach((b) => b.classList.toggle('active', b.dataset.lang === lang));
+}
+document.querySelectorAll('.lang-float [data-lang]').forEach((b) => {
+  b.addEventListener('click', () => setLang(b.dataset.lang));
+});
+
+// ============ Proyectos: el mouse controla el scroll (arrastrar + rueda) + auto-scroll ============
+(function projScroll() {
+  const vp = document.getElementById('proj-marquee');
+  const track = document.getElementById('project-grid');
+  if (!vp || !track) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let half = 0;
+  const measure = () => { half = track.scrollWidth / 2; };
+  measure();
+  window.addEventListener('resize', measure);
+
+  let auto = !reduce;
+  let dragging = false, moved = false, startX = 0, startScroll = 0;
+
+  const SPEED = 0.6; // px por frame del auto-scroll
+  let pos = 0; // acumulador flotante (scrollLeft se redondea, por eso no acumulamos sobre él)
+  function frame() {
+    if (auto && !dragging) {
+      pos += SPEED;
+      // loop sin costura (el contenido está duplicado: 'half' = un set completo)
+      if (half > 0 && pos >= half) pos -= half;
+      vp.scrollLeft = pos;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  // Pausa el auto mientras el mouse está encima (para leer / arrastrar)
+  vp.addEventListener('mouseenter', () => { auto = false; });
+  vp.addEventListener('mouseleave', () => { if (!reduce) auto = true; });
+
+  // Arrastrar para desplazar
+  vp.addEventListener('pointerdown', (e) => {
+    dragging = true; moved = false; startX = e.clientX; startScroll = vp.scrollLeft;
+    vp.classList.add('grabbing');
+    try { vp.setPointerCapture(e.pointerId); } catch (err) {}
+  });
+  vp.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 5) moved = true;
+    vp.scrollLeft = startScroll - dx;
+    pos = vp.scrollLeft;
+  });
+  const endDrag = () => { dragging = false; vp.classList.remove('grabbing'); };
+  vp.addEventListener('pointerup', endDrag);
+  vp.addEventListener('pointercancel', endDrag);
+
+  // Si venías arrastrando, no abrir el modal al soltar
+  track.addEventListener('click', (e) => {
+    if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; }
+  }, true);
+
+  // Rueda horizontal (trackpad) mueve proyectos; la vertical sigue scrolleando la página
+  vp.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { vp.scrollLeft += e.deltaX; pos = vp.scrollLeft; e.preventDefault(); }
+  }, { passive: false });
+})();
